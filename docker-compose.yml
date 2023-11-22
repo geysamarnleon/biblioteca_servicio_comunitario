@@ -1,0 +1,31 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "4545:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: ./app
+    command: /app/entrypoint.sh
+    volumes:
+      - ./app:/app
+    ports:
+      - "8080:8000"
+    environment:
+      - PGDATABASE=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGHOST=db
+      - PGPORT=5432
+    depends_on:
+      - db
+
+
+
