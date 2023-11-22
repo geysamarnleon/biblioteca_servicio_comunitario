@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+  <main>
+    <!-- =======================     Main contain START -->
+    <section class="py-4">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Profile cover and info START -->
+          <div class="col-12">
+            <div class="card mb-4 position-relative z-index-9">
+              <div class="card-body pt-3 pb-0">
+                <div class="row d-flex justify-content-between">
+                  <!-- Profile info -->
+                  <div class="col-sm-12 col-md text-center text-md-start d-md-flex justify-content-between align-items-center">
+                    <div>
+                      <h4 class="my-1">
+                        {{ user.nombre_1 }} {{ user.nombre_2 }} {{ user.apellido_1 }} {{ user.apellido_2 }} 
+                      </h4>
+                      <ul class="list-inline">
+                        <li class="list-inline-item">
+                          <i class="bi bi-person-fill me-1"></i> {{ user.rol }}
+                        </li>
+                        <li class="list-inline-item">
+                          <i class="bi bi-geo-alt me-1"></i> {{ user.area }}
+                        </li>
+                        <li class="list-inline-item">
+                          <i class="bi bi-calendar2-plus me-1"></i> Ultimo inicio de sesión {{ user.last_login }}
+                        </li>
+                      </ul>
+                      <p class="m-0"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Profile info END -->
+        </div>
+        <div class="row g-4">
+          <!-- Left sidebar START -->
+          <div class="col-lg-7 col-xxl-8">
+            <!-- Registrar START -->
+            <form method="post" enctype="multipart/form-data" class="card border mb-4" onsubmit="return confirm('¿Está seguro de que desea eliminar el proyecto?');">
+              {% csrf_token %}
+              <div class="card-header border-bottom p-3">
+                <h5 class="card-header-title mb-0">Proyecto</h5>
+              </div>
+              <div class="card-body">
+                <!-- Project title -->
+                <div class="mb-3">
+                  <label class="form-label">Seleccione un Proyecto</label>
+                  {{ form.projects|add_class:"form-control" }}
+                </div> 
+                <!-- Go button -->
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- Left sidebar END -->
+          <!-- Right sidebar START -->
+          <div class="col-lg-5 col-xxl-4">
+            <!-- Project Setting START -->
+            <div class="card border mb-4">
+              <div class="card-header border-bottom p-3">
+                <h5 class="card-header-title mb-0">Configuracion de Proyectos</h5>
+              </div>
+              <div class="card-body">
+                <div class="flex flex-column d-flex">
+                  <a href="{% url 'biblioteca:register-project' %}"
+                     class="btn btn-outline-primary">Cargar Proyecto</a>
+                  <a href="{% url 'biblioteca:edit-project' %}"
+                     class="btn btn-outline-primary">Editar Proyecto</a>
+                  <a href="{% url 'biblioteca:delete-project' %}"
+                     class="btn btn-outline-danger">Borrar Proyecto</a>
+                </div>
+              </div>
+            </div>
+            <!-- Profile Setting END -->
+          </div>
+          <!-- Right sidebar END -->
+        </div>
+      </div>
+    </section>
+    <!-- ======================= Main contain END -->
+  </main>
+{% endblock content %}

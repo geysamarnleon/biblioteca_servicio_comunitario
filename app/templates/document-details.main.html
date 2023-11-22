@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+  <main>
+    <!-- Divider -->
+    <div class="border-bottom border-primary border-1 opacity-1"></div>
+    <!-- ======================= Inner intro START -->
+    <section class="pb-3 pb-lg-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1>{{ proyecto.titulo }}</h1>
+          </div>
+          <p class="lead">{{ proyecto.resumen }}</p>
+        </div>
+      </div>
+    </section>
+    <!-- ======================= Inner intro END -->
+    <!-- ======================= Main START -->
+    <section class="pt-0">
+      <div class="container position-relative" data-sticky-container="">
+        <div class="row">
+          <!-- Left sidebar START -->
+          <div class="col-lg-4">
+            <div class="text-start mb-5"
+                 data-sticky=""
+                 data-margin-top="80"
+                 data-sticky-for="991">
+              <!-- Author info -->
+              <div class="position-relative">
+                <p class="h5 stretched-link mt-2 mb-0 d-block">Autor/es: {{ proyecto.autor }}</p>
+                <p>Tutor/es: {{ proyecto.tutor }}</p>
+              </div>
+              <hr class="d-none d-lg-block" />
+              <!-- Card info -->
+              <ul class="list-inline list-unstyled">
+                <li class="list-inline-item d-lg-block my-lg-2">Perido: {{ proyecto.periodo }}</li>
+                <li class="list-inline-item d-lg-block my-lg-2">Área: {{ proyecto.area }}</li>
+                <li class="list-inline-item d-lg-block my-lg-2">Tipo de proyecto: {{ proyecto.tipo_proyecto }}</li>
+                <li class="list-inline-item d-lg-block my-lg-2">Ubicación del servicio: {{ proyecto.ubicacion_servicio }}</li>
+              </ul>
+            </div>
+          </div>
+          <!-- Left sidebar END -->
+          <!-- Main Content START -->
+          <div class="col-lg-8 mb-5">
+            {% if file_url %}
+              <iframe id="mi-iframe"
+                      src="{{ file_url }}"
+                      height="1000vh"
+                      width="100%"
+                      frameborder="0"></iframe>
+            {% endif %}
+          </div>
+          <!-- Main Content END -->
+        </div>
+      </div>
+    </section>
+    <!-- ======================= Main END -->
+  </main>
+{% endblock content %}
