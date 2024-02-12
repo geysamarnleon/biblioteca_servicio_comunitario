@@ -10,6 +10,6 @@ User = get_user_model()
 
 class LogoutView(FormView):
     def get(self, request, *args, **kwargs):
-        messages.info(request, "Vuelva pronto.")
+        #messages.info(request, "Vuelva pronto.")
         logout(request)
         return redirect("main:home")

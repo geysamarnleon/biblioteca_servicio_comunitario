@@ -81,12 +81,11 @@ class IndexView(View):
             data = form_login.cleaned_data
             user = authenticate(email=data["email"], password=data["password"])
             if user:
-                messages.info(request, "Inicio de sesión exitoso")
                 login(request, user)
                 return redirect("main:home")
             else:
                 messages.error(request, "Correo o contraseña incorrecta")
-
+        
         context["proyectos"] = proyectos
         return render(request, self.template_name, context=context)
 
@@ -119,7 +118,7 @@ class DocumentDetailView(View):
             data = form_login.cleaned_data
             user = authenticate(email=data["email"], password=data["password"])
             if user:
-                messages.info(request, "Inicio de sesión exitoso")
+                #messages.info(request, "Inicio de sesión exitoso")
                 login(request, user)
                 return redirect("main:home")
             else:

@@ -109,51 +109,60 @@
   <body>
     {% if not user.is_authenticated %}
       <!-- Offcanvas START -->
-      <div class="offcanvas offcanvas-end {{ showFormLogin|default_if_none:'' }}"
-           tabindex="-1"
-           id="offcanvasMenu">
-        <!-- Offcanvas header -->
-        <div class="offcanvas-header justify-content-between border-bottom px-3">
-          <h3 class="mb-0">Ingrese a su cuenta</h3>
-          <button type="button"
-                  class="btn-close text-reset"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"></button>
+      <div class="imagenfond offcanvas offcanvas-end {{ showFormLogin|default_if_none:'' }}"
+      tabindex="-1"
+      id="offcanvasMenu">
+      <!-- Offcanvas header -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-7">
+
+          </div>
+          <div class="col-5 imagenfondblack">
+            <div class="mb-0 offcanvas-header justify-content-between border-bottom px-3">
+              <h3 class=""></h3>
+              <button type="button"
+                      class="btn-close text-white"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"></button>
+            </div>
+            <form class="offcanvas-body pt-5 mt-4"
+                  method="POST">
+              {% csrf_token %}
+              <!-- ======================= Inner intro START -->
+              <!-- Form START -->
+              <div class="pt-5 mt-4">
+                <div class="container d-flex align-items-center justify-content-center">
+                  <img class="navbar-brand-item"
+                       src="{% static 'img/unerg.svg' %}"
+                       alt="logo" />
+                </div>
+                <div class="pt-5 mt-4">
+                  <!-- Email -->
+                  <div class="mb-3">
+                    <label class="form-label" for="id_email">Correo</label>
+                    {{ form_login.email }}
+                  </div>
+                  <!-- Password -->
+                  <div class="mb-3">
+                    <label class="form-label" for="id_password">Contraseña</label>
+                    {{ form_login.password }}
+                  </div>
+                </div>
+                
+                <div class="mt-auto pt-5 mt-4">
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-lg btn-primary-soft mb-0">Iniciar Sesión</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Form END -->
+              <!-- ======================= Inner intro END -->
+            </form>
+          </div>
         </div>
+      </div>
         <!-- Offcanvas body -->
-        <form class="offcanvas-body d-flex flex-column justify-content-between px-3"
-              method="POST">
-          {% csrf_token %}
-          <!-- ======================= Inner intro START -->
-          <!-- Form START -->
-          <div>
-            <div class="container d-flex align-items-center justify-content-center">
-              <img class="navbar-brand-item"
-                   src="{% static 'img/unerg.svg' %}"
-                   alt="logo" />
-            </div>
-            <div class="mt-4">
-              <!-- Email -->
-              <div class="mb-3">
-                <label class="form-label" for="id_email">Correo electronico</label>
-                {{ form_login.email }}
-              </div>
-              <!-- Password -->
-              <div class="mb-3">
-                <label class="form-label" for="id_password">Contraseña</label>
-                {{ form_login.password }}
-              </div>
-            </div>
-          </div>
-          <!-- Form END -->
-          <div class="mt-auto">
-            <!-- Button -->
-            <div class="d-grid">
-              <button type="submit" class="btn btn-lg btn-primary-soft mb-0">Iniciar Sesión</button>
-            </div>
-          </div>
-          <!-- ======================= Inner intro END -->
-        </form>
       </div>
       <!-- Offcanvas END -->
     {% endif %}
@@ -164,14 +173,12 @@
         <div class="container">
           <!-- Logo START -->
           <a class="navbar-brand" href="{% url 'main:home' %}">
-            <img style="width: 150px;
-                        height: 80px"
+            <img style="width: 150px; height: 80px"
                  class="navbar-brand-item light-mode-item"
                  src="{% static 'img/unerg.svg' %}"
                  alt="logo" />
             <img class="navbar-brand-item dark-mode-item"
-                 style="width: 150px;
-                        height: 80px"
+                 style="width: 150px; height: 80px"
                  src="{% static 'img/unerg.svg' %}"
                  alt="logo" />
           </a>
@@ -288,20 +295,18 @@
             <!-- Offcanvas menu toggler -->
             {% if not user.is_authenticated %}
               <div class="nav-item position-relative ms-3">
-                <a class="nav-link btn btn-outline-light btn-round mb-0 fs-3"
-                   data-bs-toggle="offcanvas"
-                   href="#offcanvasMenu"
-                   role="button"
-                   aria-controls="offcanvasMenu">
-                  <i class="bi bi-box-arrow-in-right" data-bs-target="#offcanvasMenu"></i>
-                </a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasMenu" role="button" aria-controls="offcanvasMenu">
+                  Iniciar Sesión
+                </button>
               </div>
             {% else %}
               <div class="nav-item position-relative ms-3">
-                <a class="nav-link btn btn-outline-light btn-round mb-0 fs-3"
+                <a 
                    href="{% url 'authentication:logout' %}"
                    role="button">
-                  <i class="bi bi-box-arrow-in-left"></i>
+                  <button type="button" class="btn btn-primary" >
+                    Cerrar Sesión
+                  </button>
                 </a>
               </div>
             {% endif %}
@@ -312,9 +317,11 @@
     </header>
     <!-- ======================= Header END -->
     <!-- **************** MAIN CONTENT START **************** -->
-    {% block content %}
-    {% endblock content %}
-    <!-- **************** MAIN CONTENT END ********** ****** -->
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <!-- **************** MAIN CONTENT END **************** -->
     <!-- ======================= Footer START -->
     <footer class="mb-3 pt-5">
       <div class="container">
@@ -349,7 +356,7 @@
     <script src="{% static 'libs/toastr/toastr.min.js' %}"></script>
     {% if messages %}
       <script>
-      // Message JS 
+        // Message JS 
         toastr.options = {
           "closeButton": false,
           "debug": false,
@@ -371,11 +378,28 @@
         {% for message in messages %}
           {% if message.tags %}toastr["{{ message.tags|safe }}"](" ", "{{ message|safe }}"){% endif %}
         {% endfor %}
-
       </script>
     {% endif %}
     {% block custom_script %}
       <!-- Custom JS -->
     {% endblock custom_script %}
-  </body>
+</body>
+
+</html>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    header, footer {
+        width: 100%;
+    }
+</style>
 </html>

@@ -2,14 +2,16 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin, register
 from .models import Area, Programa, Rol, AuthUser, Tutores
 from django.contrib.auth.models import Group
-from admin_interface.models import Theme
+# from admin_interface.models import Theme
 
 # Register your models here.
 admin.site.unregister(Group)
-admin.site.unregister(Theme)
+# admin.site.unregister(Theme)
 admin.site.register(Tutores)
 admin.site.register(Programa)
 
+admin.site.site_header = 'Biblioteca'
+admin.site.site_title = 'Biblioteca'
 
 @register(AuthUser)
 class AuthUserAdmin(ModelAdmin):

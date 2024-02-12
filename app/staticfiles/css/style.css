@@ -188,9 +188,13 @@
   }
 }
 
-body {
-  margin: 0;
-  font-family: var(--bs-body-font-family);
+
+   body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+
+   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -199,7 +203,24 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
+  }
+
+  /* Estilo para los inputs con bordes redondeados */
+  input {
+    border-radius: 5px;
+  }
+
+  /* Estilo adicional para el formulario en la pantalla de inicio de sesión */
+  .offcanvas-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  
+
 
 hr {
   margin: 1rem 0;
@@ -6916,6 +6937,28 @@ textarea.form-control-lg {
   --bs-spinner-height: 1rem;
 }
 
+#header a:link, #header a:visited, #logout-form button {
+  color: black;
+}
+
+.imagenfond {
+    /* Establece la altura y anchura del div según tus necesidades */
+  /* Especifica la imagen de fondo y ajusta la propiedad background-size según sea necesario */
+  background-image: url('../img/header1-MOVIL-1.jpg');
+  background-size: cover; /* o "contain" dependiendo de tus necesidades */
+  background-position: center; /* Centra la imagen en el div */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.imagenfondblack {
+    /* Establece la altura al 100% de la altura de la ventana */
+    height: 100vh;
+    /* Establece el color de fondo a negro */
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Establece la imagen de fondo y ajusta la propiedad background-size según sea necesario */
+    background-size: auto; /* o "contain" dependiendo de tus necesidades */
+}
+
 @media (prefers-reduced-motion: reduce) {
   .spinner-border,
   .spinner-grow {
@@ -6924,7 +6967,7 @@ textarea.form-control-lg {
 }
 .offcanvas, .offcanvas-xxl, .offcanvas-xl, .offcanvas-lg, .offcanvas-md, .offcanvas-sm {
   --bs-offcanvas-zindex: 1045;
-  --bs-offcanvas-width: 400px;
+  --bs-offcanvas-width: 4000px;
   --bs-offcanvas-height: 30vh;
   --bs-offcanvas-padding-x: 1.875rem;
   --bs-offcanvas-padding-y: 1rem;

@@ -43,7 +43,7 @@ CSRF_TRUSTED_ORIGINS = ["https://*.railway.app"]
 
 # Application definition
 INSTALLED_APPS = [
-    "admin_interface",
+    # "admin_interface",
     "colorfield",
     "django.contrib.admin",
     "django.contrib.auth",
