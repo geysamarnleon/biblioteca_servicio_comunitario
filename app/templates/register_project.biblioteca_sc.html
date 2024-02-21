@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+  <main>
+    <!-- =======================     Main contain START -->
+    <section class="py-4">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Profile cover and info START -->
+          <div class="col-12">
+            <div class="card mb-4 position-relative z-index-9">
+              <div class="card-body pt-3 pb-0">
+                <div class="row d-flex justify-content-between">
+                  <!-- Profile info -->
+                  <div class="col-sm-12 col-md text-center text-md-start d-md-flex justify-content-between align-items-center">
+                    <div>
+                      <h4 class="my-1">{{ user.nombre_1 }} {{ user.nombre_2 }} {{ user.apellido_1 }} {{ user.apellido_2 }}</h4>
+                      <ul class="list-inline">
+                        <li class="list-inline-item">
+                          <i class="bi bi-person-fill me-1"></i> {{ user.rol }}
+                        </li>
+                        <li class="list-inline-item">
+                          <i class="bi bi-geo-alt me-1"></i> {{ user.area }}
+                        </li>
+                        <li class="list-inline-item">
+                          <i class="bi bi-calendar2-plus me-1"></i> Último inicio de sesión {{ user.last_login }}
+                        </li>
+                      </ul>
+                      <p class="m-0"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Profile info END -->
+        </div>
+        <div class="row g-4">
+          <!-- Left sidebar START -->
+          <div class="col-lg-7 col-xxl-8">
+            <!-- Registrar START -->
+            <form method="post" enctype="multipart/form-data" class="card border mb-4">
+              {% csrf_token %}
+              <div class="card-header border-bottom p-3">
+                <h5 class="card-header-title mb-0">Proyecto</h5>
+              </div>
+              <div class="card-body">
+                <!-- Project title -->
+                <div class="mb-3">
+                  <label class="form-label">Título</label>
+                  {{ form.titulo|add_class:"form-control" }}
+                  {% if form.titulo.errors %}
+                    {% for error in form.titulo.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Project author -->
+                <div class="mb-3">
+                  <label class="form-label">Autor/res</label>
+                  {{ form.autor|add_class:"form-control" }}
+                  {% if form.autor.errors %}
+                    {% for error in form.autor.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Project tutor -->
+                <div class="mb-3">
+                  <label class="form-label">Tutor/res</label>
+                  {{ form.tutor|add_class:"form-control" }}
+                  {% if form.tutor.errors %}
+                    {% for error in form.tutor.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Project period -->
+                <div class="mb-3">
+                  <label class="form-label">Período</label>
+                  {{ form.periodo|add_class:"form-control" }}
+                  {% if form.periodo.errors %}
+                    {% for error in form.periodo.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Project program -->
+                <div class="mb-3">
+                  <label class="form-label">Programa</label>
+                  {{ form.programa|add_class:"form-control" }}
+                  {% if form.programa.errors %}
+                    {% for error in form.programa.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+
+                <!-- Project theme -->
+                <div class="mb-3">
+                  <label class="form-label">Tematica</label>
+                  {{ form.tematica|add_class:"form-control" }}
+                  {% if form.tematica.errors %}
+                    {% for error in form.tematica.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Project file -->
+                <div class="mb-3">
+                  <label class="form-label">Documento</label>
+                  {{ form.file|add_class:"form-control" }}
+                  {% if form.file.errors %}
+                    {% for error in form.file.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Project summary -->
+                <div class="mb-3">
+                  <label class="form-label">Resumen</label>
+                  {{ form.resumen|add_class:"form-control"|attr:"rows:5" }}
+                  {% if form.resumen.errors %}
+                    {% for error in form.resumen.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Project service_location -->
+                <div class="mb-3">
+                  <label class="form-label">Ubicación del servicio</label>
+                  {{ form.ubicacion_servicio|add_class:"form-control" }}
+                  {% if form.ubicacion_servicio.errors %}
+                    {% for error in form.ubicacion_servicio.errors %}<strong class="text-danger">{{ error|escape }}</strong>{% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Save button -->
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="submit" class="btn btn-primary">Subir Proyecto</button>
+                </div>
+              </div>
+            </form>
+            <!-- Profile END -->
+          </div>
+          <!-- Left sidebar END -->
+          <!-- Right sidebar START -->
+          <div class="col-lg-5 col-xxl-4">
+            <!-- Project Setting START -->
+            <div class="card border mb-4">
+              <div class="card-header border-bottom p-3">
+                <h5 class="card-header-title mb-0">Configuración de Proyectos</h5>
+              </div>
+              <div class="card-body">
+                <div class="flex flex-column d-flex">
+                  <a href="{% url 'biblioteca:register-project' %}"
+                     class="btn btn-outline-primary">Cargar Proyecto</a>
+                  <a href="{% url 'biblioteca:edit-project' %}"
+                     class="btn btn-outline-primary">Editar Proyecto</a>
+                  <a href="{% url 'biblioteca:delete-project' %}"
+                     class="btn btn-outline-danger">Borrar Proyecto</a>
+                </div>
+              </div>
+            </div>
+            <!-- Profile Setting END -->
+          </div>
+          <!-- Right sidebar END -->
+        </div>
+      </div>
+    </section>
+    <!-- ======================= Main contain END -->
+  </main>
+{% endblock content %}

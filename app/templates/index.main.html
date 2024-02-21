@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+  <main>
+    <!-- ======================= Main START -->
+    <section class="pt-3 pt-lg-5">
+      <div class="container-fluid px-5">
+        <div class="row justify-content-center">
+          <!-- Title -->
+          <div class="mb-4">
+            <h2 class="m-0" style="text-align: center;">Catálogo de Proyectos</h2>
+          </div>
+          
+          <!-- Main part START -->
+          <div class="col-xl-4">
+            <!-- Search filter START -->
+            <form method="get" class="row g-2 g-xl-4 mb-4">
+              <!-- Search -->
+              <div class="col-xl-12 col-md-6">
+                <div class="rounded position-relative">
+                  <input class="form-control pe-5"
+                         name="filter"
+                         type="search"
+                         value="{{ filter_query|default:'' }}"
+                         placeholder="Buscar proyectos por titulo o palabra clave..."
+                         aria-label="Search">
+                  <button class="btn bg-transparent border-0 px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
+                          type="submit">
+                    <i class="bi bi-search fs-5"> </i>
+                  </button>
+                </div>
+              </div>
+              <!-- Select -->
+              <div class="col-md-6 col-xl-5 d-grid d-xl-none">
+                <!-- Filter offcanvas button -->
+                <button class="btn btn-primary-soft btn-primary-check mb-0"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasSidebar"
+                        aria-controls="offcanvasSidebar">
+                  <i class="fas fa-sliders-h"></i> Mostrar Filtros
+                </button>
+              </div>
+            </form>
+            <!-- Search filter END -->
+            <!-- Project START -->
+            <div class="row g-4">
+              {% if proyectos|length > 0 %}
+                {% for proyecto in proyectos %}
+                  <!-- Project item START -->
+                  <div class="col-sm-12 col-md-12">
+                    <div class="card border p-3 h-100">
+                      <!-- Card body -->
+                      <div class="card-body p-3 px-0">
+                        <!-- Title -->
+                        <h5 class="card-title">{{ proyecto.titulo }}</h5>
+                        <hr />
+                        <!-- accordion -->
+                        <div class="accordion" id="project-{{ proyecto.id }}">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-heading-{{ proyecto.id }}">
+                              <button class="accordion-button collapsed"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#flush-collapse-{{ proyecto.id }}"
+                                      aria-expanded="false"
+                                      aria-controls="flush-collapse-{{ proyecto.id }}">Mas detalles</button>
+                            </h2>
+                            <div id="flush-collapse-{{ proyecto.id }}"
+                                 class="accordion-collapse collapse"
+                                 aria-labelledby="flush-heading-{{ proyecto.id }}"
+                                 data-bs-parent="#project-{{ proyecto.id }}">
+                              <div class="accordion-body">
+                                <h6 class="card-subtitle mb-2 text-success">Por: {{ proyecto.autor }}</h6>
+                                <h6 class="card-subtitle mb-2 text-success">Ubicado: {{ proyecto.area }}</h6>
+                                <h6 class="card-subtitle mb-2 text-success">Período: {{ proyecto.periodo }}</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Card footer -->
+                      <div class="card-footer text-center p-0">
+                        <!-- Button -->
+                        <a href="{% url 'main:document' proyecto.id %}"
+                           class="btn btn-sm btn-primary-soft mb-0 fs-6"><i class="bi bi-eye-fill me-2"></i>Ver el proyecto</a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Project item END -->
+                {% endfor %}
+              {% endif %}
+              <!-- Pagination START -->
+              <div class="col-12">
+                <nav class="d-flex justify-content-center" aria-label="navigation">
+                  <!-- Pagination 1 2 3  -->
+                  <ul class="pagination pagination-bordered justify-content-center d-inline-block d-lg-flex">
+                    <li class="page-item">
+                      {% if proyectos.has_previous %}<a class="page-link" href="?pagina=1">Inicio</a>{% endif %}
+                    </li>
+                    <li class="page-item">
+                      {% if proyectos.has_previous %}
+                        <a class="page-link" href="?pagina={{ proyectos.previous_page_number }}">Anterior</a>
+                      {% endif %}
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">Página {{ proyectos.number }} / {{ proyectos.paginator.num_pages }}</a>
+                    </li>
+                    <li class="page-item">
+                      {% if proyectos.has_next %}
+                        <a class="page-link" href="?pagina={{ proyectos.next_page_number }}">Siguiente</a>
+                      {% endif %}
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?pagina={{ proyectos.paginator.num_pages }}">Última</a>
+                    </li>
+                  </ul>
+                </nav>
+                <section style="padding-bottom: 0;" class="facebook-comment"><h3>Comentarios</h3>
+                  <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="1" data-order-by="reverse_time"></div>
+              </section>
+              </div>
+              <!-- Pagination END -->
+            </div>
+            <!-- Project END -->
+          </div>
+          <!-- Filter START -->
+          <aside class="col-xl-3 col-xxl-3">
+            <!-- Responsive offcanvas body START -->
+            <form class="offcanvas-xl offcanvas-end"
+                  method="post"
+                  tabindex="-1"
+                  id="offcanvasSidebar"
+                  aria-labelledby="offcanvasSidebarLabel">
+              {% csrf_token %}
+              <div class="offcanvas-header" style="background-color: #3e5f8a;">
+                <h5 class="offcanvas-title" id="offcanvasSidebarLabel" style="color: white;">Filtro Avanzado</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        data-bs-target="#offcanvasSidebar"
+                        aria-label="Close" style="color: white;"></button>
+              </div>
+              <div class="offcanvas-body flex-column p-3 p-xl-0 xd">
+                <div class="border rounded-2">
+                  <div class="card card-body">
+                    <!-- Title -->
+                    <h6 class="mb-3">Área</h6>
+                    <!-- Area group -->
+                    <div class="col-12">
+                      {% if form_filter1.areas|length > 0 %}
+                        {% for index_check in form_filter1.areas %}
+                          {% if forloop.counter < 5 %}
+                            <!-- Checkbox -->
+                            <div>{{ index_check }}</div>
+                          {% endif %}
+                        {% endfor %}
+                        {% if form_filter1.areas|length > 4 %}
+                          <div class="multi-collapse collapse" id="areaCollapes">
+                            {% for index_check in form_filter1.areas %}
+                              {% if forloop.counter > 4 %}
+                                <!-- Checkbox -->
+                                <div>{{ index_check }}</div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                          <a class="p-0 mb-0 mt-2 btn-more d-flex align-items-center collapsed"
+                             data-bs-toggle="collapse"
+                             href="#areaCollapes"
+                             role="button"
+                             aria-expanded="false"
+                             aria-controls="areaCollapes">
+                            Mostrar <span class="see-more ms-1">Mas</span><span class="see-less ms-1">Menos</span><i class="fas fa-angle-down ms-2"></i>
+                          </a>
+                        {% endif %}
+                      {% else %}
+                        <a class="p-0 mb-0 mt-2 btn-more d-flex align-items-center collapsed" style="color:#3e5f8a">No se ha encontrado ningún área</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <!-- Divider -->
+                  <hr class="my-0" style="margin: 1rem;" />
+                  <!-- Divider -->
+                  <!-- Programa START -->
+                  <div class="card card-body">
+                    <!-- Title -->
+                    <h6 class="mb-3">Programa</h6>
+                    <!-- Area group -->
+                    <div class="col-12">
+                      {% if form_filter1.programas|length > 0 %}
+                        {% for index_check in form_filter1.programas %}
+                          {% if forloop.counter < 5 %}
+                            <!-- Checkbox -->
+                            <div>{{ index_check }}</div>
+                          {% endif %}
+                        {% endfor %}
+                        {% if form_filter1.programas|length > 4 %}
+                          <div class="multi-collapse collapse" id="areaCollapes">
+                            {% for index_check in form_filter1.programas %}
+                              {% if forloop.counter > 4 %}
+                                <!-- Checkbox -->
+                                <div>{{ index_check }}</div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                          <a class="p-0 mb-0 mt-2 btn-more d-flex align-items-center collapsed"
+                             data-bs-toggle="collapse"
+                             href="#areaCollapes"
+                             role="button"
+                             aria-expanded="false"
+                             aria-controls="areaCollapes">
+                            Mostrar <span class="see-more ms-1">Mas</span><span class="see-less ms-1">Menos</span><i class="fas fa-angle-down ms-2"></i>
+                          </a>
+                        {% endif %}
+                      {% else %}
+                        <a class="p-0 mb-0 mt-2 btn-more d-flex align-items-center collapsed" style="color:#3e5f8a">No se ha encontrado ningún programa</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <!-- Programa END -->
+                  <hr class="my-0"/>
+                  <!-- Divider -->
+                </div>
+                <div class="d-flex justify-content-between p-2 p-xl-0 mt-xl-4 mt-2">
+                  <a href="{% url 'main:home' %}" class="btn-link p-0 mb-0" style="color:#3e5f8a;">Limpiar todo</a>
+                  <button type="submit" class="btn mb-0" style="background: #3e5f8a; color: white;">Filtrar</button>
+                </div>
+                <!-- Form End -->
+              </div>
+              <!-- Buttons -->
+              
+            </form>
+            <!-- Responsive offcanvas body END -->
+          </aside>
+          <!-- Filter END -->
+          <!-- Main part END -->
+          <aside class="col-xl-3 col-xxl-3">
+            <!-- Responsive offcanvas body START -->
+            <div class="offcanvas-body flex-column p-3 p-xl-0">
+              <div class="border rounded-2">
+                <div class="card card-body">
+                  <!-- Title -->
+                  <h6 class="mb-3" style="margin: 0;">Reseña</h6>
+                  La Universidad Nacional Experimental de los Llanos Centrales Rómulo Gallegos (UNERG), es una Universidad Venezolana, ubicada en San Juan de los Morros, estado Guárico. Fundada en el año 1977, es la principal institución de educación superior de los llanos centrales venezolanos.
+                </div>
+                <!-- Divider -->
+                <hr class="my-0" style="margin: 1rem;" />
+                <!-- Divider -->
+                <!-- Programa START -->
+                <div class="card card-body">
+                  <!-- Area group -->
+                  <div class="col-12">
+                    <div id="carrusel-contenido">
+                      <div id="carrusel-caja">
+                          <div class="carrusel-elemento">
+                              <img class="imagenes" src="https://aisinnovadora.files.wordpress.com/2014/02/sede-unerg.jpg" >
+                          </div>
+                          <div class="carrusel-elemento">   
+                              <img class="imagenes" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Centro_Universitario_Regional_Principal_de_la_UNERG%2C_en_Matur%C3%ADn.jpg">
+                          </div>
+                          <div class="carrusel-elemento">   
+                              <img class="imagenes" src="https://www.vtv.gob.ve/wp-content/uploads/2023/03/Inauguracion-del-Edificio-de-Ciencias-Politicas-y-Juridicas-de-la-UNERG.png">                        
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+                <!-- Programa END -->
+                <hr class="my-0"/>
+                <!-- Divider -->
+              </div>
+
+              <!-- Form End -->
+            </div>
+            
+            <!-- Responsive offcanvas body END -->
+          </aside>
+          
+        </div>
+      </div>
+    </section>
+    <!-- ======================= Main END -->
+  </main>
+{% endblock content %}

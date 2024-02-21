@@ -1,0 +1,360 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <!-- Meta Tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="author" content="algerninja" />
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="assets/images/favicon.ico" />
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="{% static 'css/css2.css' %}" rel="stylesheet" />
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-icons.css' %}" />
+  <!-- Theme CSS -->
+  <link id="style-switch" rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <!-- Toasts CSS -->
+  <link id="style-switch" rel="stylesheet" type="text/css" href="{% static 'libs/toastr/toastr.min.css' %}" />
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v19.0" nonce="N7Rxh5Ft"></script>
+  <style>
+    .mb-4 {
+      animation: .6s forwards fadeout;
+      animation-delay: .6s;
+      opacity: 0;
+    }
+  .rounded-2, .xd{
+      animation: .6s forwards fadeout;
+      animation-delay: 1.2s;
+      opacity: 0;
+    }
+
+    .pagination, .facebook-comment{ 
+      animation: .6s forwards fadeout;
+      animation-delay: 1s;
+      opacity: 0;
+    }
+
+    .navbar-brand{
+      animation: .6s forwards fadeout;
+      animation-delay: .4s;
+      opacity: 0;
+    }
+
+    @keyframes fadeout {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    #carrusel-caja {
+      -moz-animation: automatizacion 12s infinite ease-in-out;
+      -o-animation: automatizacion 12s infinite ease-in-out;
+      -webkit-animation: automatizacion 12s infinite ease-in-out;
+      animation: automatizacion 12s infinite ease-in-out;
+      -webkit-transition: all 0.75s ease;
+      -moz-transition: all 0.75s ease;
+      -ms-transition: all 0.75s ease;
+      -o-transition: all 0.75s ease;
+      transition: all 0.75s ease;
+      width: 300%;
+    }
+
+    #carrusel-contenido {
+      margin: 0 auto;
+      overflow: hidden;
+      text-align: left;
+      height: 200px;
+    }
+
+    .imagenes {
+      border-radius: 4px;
+      width: 100%;
+    }
+
+    .carrusel-elemento {
+      float: left;
+      width: 33.333%;
+    }
+
+    @-moz-keyframes automatizacion {
+      0% {
+        margin-left: 0;
+      }
+
+      30% {
+        margin-left: 0;
+      }
+
+      35% {
+        margin-left: -100%;
+      }
+
+      65% {
+        margin-left: -100%;
+      }
+
+      70% {
+        margin-left: -200%;
+      }
+
+      95% {
+        margin-left: -200%;
+      }
+
+      100% {
+        margin-left: 0;
+      }
+    }
+
+    @-webkit-keyframes automatizacion {
+      0% {
+        margin-left: 0;
+      }
+
+      30% {
+        margin-left: 0;
+      }
+
+      35% {
+        margin-left: -100%;
+      }
+
+      65% {
+        margin-left: -100%;
+      }
+
+      70% {
+        margin-left: -200%;
+      }
+
+      95% {
+        margin-left: -200%;
+      }
+
+      100% {
+        margin-left: 0;
+      }
+    }
+
+    @keyframes automatizacion {
+      0% {
+        margin-left: 0;
+      }
+
+      30% {
+        margin-left: 0;
+      }
+
+      35% {
+        margin-left: -100%;
+      }
+
+      65% {
+        margin-left: -100%;
+      }
+
+      70% {
+        margin-left: -200%;
+      }
+
+      95% {
+        margin-left: -200%;
+      }
+
+      100% {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {% if not user.is_authenticated %}
+  <!-- Offcanvas START -->
+  <div class="offcanvas offcanvas-end {{ showFormLogin|default_if_none:'' }}" tabindex="-1" id="offcanvasMenu">
+    <!-- Offcanvas header -->
+    <div class="offcanvas-header justify-content-between border-bottom px-3" style="background-color: #3e5f8a;">
+      <h3 class="mb-0" style="color: white;">Ingrese a su cuenta</h3>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <!-- Offcanvas body -->
+    <form class="offcanvas-body d-flex flex-column justify-content-between px-3" method="POST">
+      {% csrf_token %}
+      <!-- ======================= Inner intro START -->
+      <!-- Form START -->
+      <div>
+        <div class="container d-flex align-items-center justify-content-center">
+          <img class="navbar-brand-item" src="{% static 'img/unerg.svg' %}" alt="logo" style="width: 60%;" />
+        </div>
+        <div class="mt-4">
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label" for="id_email">Correo electronico</label>
+            {{ form_login.email }}
+          </div>
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="form-label" for="id_password">Contraseña</label>
+            {{ form_login.password }}
+          </div>
+          <div class="mb-1" style="margin-top: -10px">
+            <a href="{% url 'main:reset_password' %}" style="padding: .4rem 0rem; color: #3e5f8a;">Olvide mi contraseña</a>
+          </div>
+          <div class="d-grid">
+
+            <button type="submit" class="btn btn-lg btn-primary-soft mb-0">Iniciar Sesión</button>
+          </div>
+        </div>
+      </div>
+      <!-- ======================= Inner intro END -->
+    </form>
+  </div>
+  <!-- Offcanvas END -->
+  {% endif %}
+  <!-- ======================= Header START -->
+  <header class="navbar-light navbar-sticky header-static">
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-xl">
+      <div class="container">
+        <!-- Logo START -->
+        <a class="navbar-brand" href="{% url 'main:home' %}">
+          <img style="width: 150px;
+                        height: 80px" class="navbar-brand-item light-mode-item" src="{% static 'img/unerg.svg' %}"
+            alt="logo" />
+          <img class="navbar-brand-item dark-mode-item" style="width: 150px;
+                        height: 80px" src="{% static 'img/unerg.svg' %}" alt="logo" />
+        </a>
+        <!-- Logo END -->
+        <!-- Responsive navbar toggler -->
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="text-body h6 d-none d-sm-inline-block">Menu</span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Main navbar START -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+            <!-- Nav item 1 Inicio -->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'main:home' %}">Inicio</a>
+            </li>
+            {% if user.is_staff %}
+            <!-- Nav item 3 Panel de control-->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">Panel administrativo</a>
+            </li>
+            {% else %}
+            {% if user.is_authenticated %}
+            <!-- Nav item 3 Panel de control-->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'biblioteca:register-project' %}">Panel</a>
+            </li>
+            {% endif %}
+            {% endif %}
+          </ul>
+        </div>
+        <!-- Main navbar END -->
+        <div class="nav flex-nowrap align-items-center ms-3 ms-lg-4">
+          {% if not user.is_authenticated %}
+          <div class="nav-item position-relative ms-3">
+            <a class="nav-link btn btn-outline-light btn-round mb-0 fs-3" data-bs-toggle="offcanvas"
+              href="#offcanvasMenu" role="button" aria-controls="offcanvasMenu">
+              <i class="bi bi-box-arrow-in-right" data-bs-target="#offcanvasMenu"></i>
+            </a>
+          </div>
+          {% else %}
+          <div class="nav-item position-relative ms-3">
+            <a class="nav-link btn btn-outline-light btn-round mb-0 fs-3" href="{% url 'authentication:logout' %}"
+              role="button">
+              <i class="bi bi-box-arrow-in-left"></i>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    <!-- Logo Nav END -->
+  </header>
+  <!-- ======================= Header END -->
+  <!-- **************** MAIN CONTENT START **************** -->
+  {% block content %}
+  {% endblock content %}
+  <!-- **************** MAIN CONTENT END ********** ****** -->
+  <!-- ======================= Footer START -->
+  <footer class="mb-3 pt-5">
+    <div class="container">
+      <div class="card card-body">
+        <div class="row align-items-center justify-content-between">
+          <div>
+            <!-- Copyright -->
+            <div class="text-center" style="color: #3e5f8a">
+              <a href="https://www.facebook.com/oficialunerg1977/" target="blank" class="text-reset btn-link">Facebook</a> |
+              <a href="https://www.instagram.com/oficial_unerg/?hl=en" target="blank" class="text-reset btn-link">Instagram</a> |
+              ©2023
+              <a href="https://unerg.edu.ve/" class="text-reset btn-link" target="_blank">U.N.E.R.G</a>. All rights
+              reserved
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- ======================= Footer END -->
+  <!-- Back to top -->
+  <div class="back-top">
+    <i class="bi bi-arrow-up-short"></i>
+  </div>
+  <!-- ======================= JS libraries, plugins and custom scripts -->
+  <!-- JQuery JS -->
+  <script src="{% static 'libs/jquery/jquery-3.7.0.min.js' %}"></script>
+  <!-- Bootstrap JS -->
+  <script src="{% static 'libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Template Functions -->
+  <script src="{% static 'js/functions.js' %}"></script>
+  <!-- Toasts js -->
+  <script src="{% static 'libs/toastr/toastr.min.js' %}"></script>
+  {% if messages %}
+  <script>
+    // Message JS 
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "10000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+
+    {% for message in messages %}
+    {% if message.tags %} toastr["{{ message.tags|safe }}"](" ", "{{ message|safe }}"){% endif %}
+    {% endfor %}
+
+  </script>
+  {% endif %}
+  {% block custom_script %}
+  <!-- Custom JS -->
+  {% endblock custom_script %}
+</body>
+
+</html>
